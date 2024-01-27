@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do list application</title>
+    <!-- <link rel="stylesheet" href="./todo.css"> -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            background-image: linear-gradient(to right, #1d0c29, #612b63, #3e243a);
+            padding: 10px;
+        }
+
+        .todo-app {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            margin: 100px auto 20px;
+            padding: 40px 30px 70px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .todo-app h2 {
+            color: red;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .titlee {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .titlee h2 {
+            color: #edeefe;
+            text-align: center;
+        }
+
+        .titlee img {
+            width: 40px;
+
+            /* margin-top: 10px; */
+            margin-left: 10px;
+            border-radius: 8px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(233, 150, 122, 0.377);
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            padding: 15px;
+            color: black;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            padding: 16px 50px;
+            background: #0f0c29;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 40px;
+        }
+
+        ul li {
+            list-style: none;
+            font-size: 17px;
+            padding: 12px;
+            user-select: none;
+            cursor: pointer;
+
+        }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background-image: url(https://cdn.shopify.com/s/files/1/2661/6120/files/SL-112520-38300-16__Converted.png?v=1666056128);
+            background-size: cover;
+            background-position: center;
+            left: 8px;
+        }
+
+        ul li.checked {
+            color: #555;
+            text-decoration: line-through;
+        }
+
+        ul li.checked::before {
+            background: url(https://cdn.shopify.com/s/files/1/2661/6120/files/SL-112520-38300-16__Converted.png?v=1666056128);
+        }
+
+        ul li.span {
+            position: absolute;
+            right: 0;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50px;
+            color: #555;
+        }
+
+        ul li.span:hover {
+            background: #edeefe;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="titlee">
+            <h2>To-do List</h2> <img
+                src="https://media.istockphoto.com/id/1093153126/pt/vetorial/to-do-list-icon.jpg?s=170667a&w=0&k=20&c=u8xN9umBA3i8mBI_bNT9aqgRRnJt9D1JDTssxBaZHDc="
+                alt="" />
+        </div>
+        <div class="todo-app">
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add Task">
+                <button onclick="addtast()">Add</button>
+            </div>
+            <ul id="list-container">
+            </ul>
+        </div>
+
+
+    </div>
+    <script>
+        const inputbox = document.getElementById("input-box");
+        const listcontainer = document.getElementById("list-container");
+
+        function addtast() {
+            if (inputbox.value === '') {
+                alert("Please Enter task");
+            }
+            else {
+                let li = document.createElement("li");
+                li.innerHTML = inputbox.value;
+                listcontainer.appendChild(li);
+                let span = document.createElement("span");
+                span.innerHTML = "\u00d7";
+                li.appendChild(span);
+            }
+            inputbox.value = "";
+            savedata();
+        }
+
+        listcontainer.addEventListener("click", function (e) {
+            if (e.target.tagName === "LI") {
+                e.target.classList.toggle("checked");
+            }
+            else if (e.target.tagName === "SPAN") {
+                e.target.parentElemet.remove();
+            }
+        }, false);
+        function savedata() {
+            localStorage.setItem("data", listcontainer.innerHTML);
+        }
+        function showtask() {
+            listcontainer.innerHTML = localStorage.getItem("data");
+        }
+    </script>
+</body>
+
+</html>
